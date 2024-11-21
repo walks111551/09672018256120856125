@@ -1,4 +1,4 @@
-REM - #NoEnv
+goto Resume_file
 #SingleInstance, Force
 #Persistent
 #InstallKeybdHook
@@ -198,7 +198,7 @@ f9::Reload
 
 
 
-
+:Resume_file
 
 
 cd %TEMP%
