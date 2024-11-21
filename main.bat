@@ -1,6 +1,4 @@
-@echo off
-GOTO :START
-#NoEnv
+REM - #NoEnv
 #SingleInstance, Force
 #Persistent
 #InstallKeybdHook
@@ -17,40 +15,36 @@ Process, Priority, %PID%, High
 Gui, +AlwaysOnTop
 Width := 310
 Gui, +LastFound
-WinSet, Transparent, 180 		; Transparency of gui
-Gui, Color, 808080  			; Background color of gui
+WinSet, Transparent, 180 		;Transparency of gui
+Gui, Color, 808080  			;Background color of gui
 Gui, Margin, 0, 0
  
 ; GUI Title
 Gui, Font, s10 cD0D0D0 Bold
 Gui, Add, Progress, % "x-1 y-1 w" (Width+2) " h31 Background000000 Disabled hwndHPROG"
 Control, ExStyle, -0x20000, , ahk_id %HPROG% 
-Gui, Add, Text, % "x0 y0 w" Width " h30 BackgroundTrans Center 0x200 gGuiMove vCaption", Zombies Aim Assist v1.1
+Gui, Add, Text, % "x0 y0 w" Width " h30 BackgroundTrans Center 0x200 gGuiMove vCaption", Sai's Aim Assist
  
 ; GUI Body
 Gui, Font, s8
-Gui, Add, CheckBox, % "x7 y+10 w" (Width-14) "r1 +0x4000 vEnableCheckbox", Enable (ALT key)
- 
-; Smoothing Control
-Gui, Add, Text, % "x7 y+10 w" (Width-100) "r1 +0x4000", Smoothing
+Gui, Add, CheckBox, % "x7 y+10 w" (Width-14) "r1 +0x4000 vEnableCheckbox", Enable (ALT Key)
+Gui, Add, CheckBox, % "x7 y+5 w" (Width-14) "r1 +0x4000 vEnablePredictionCheckbox", Enable Prediction
+; Target
+Gui, Add, Text, % "x7 y+10 w" (Width-14) "r1 +0x4000", Target Location
+Gui, Add, Button, % "x7 y+5 w" (Width-200) "r1 +0x4000 gHeadshotsButton", Head
+Gui, Add, Button, % "x+2+m w" (Width-200) "r1 +0x4000 gChestButton", Chest
+; Add Smoothing Control
+Gui, Add, Text, % "x7 y+10 w" (Width-100) "r1 +0x4000", Smoothing (Default is 0.11)
 Gui, Add, Text, % "x+m w" (Width-14) "r1 +0x4000 vSmoothingValue", %smoothing%
 Gui, Add, Button, % "x7 y+5 w" (Width-275) "r1 +0x4000 gDecreaseSmoothing", -
 Gui, Add, Button, % "x+2+m w" (Width-275) "r1 +0x4000 gIncreaseSmoothing", +
- 
-; ZeroY Control
-Gui, Add, Text, % "x7 y+10 w" (Width-100) "r1 +0x4000", Aim Level (ZeroY)
-Gui, Add, Text, % "x+m w" (Width-14) "r1 +0x4000 vZeroYValue", %ZeroY%
-Gui, Add, Button, % "x7 y+5 w" (Width-275) "r1 +0x4000 gDecreaseZeroY", -
-Gui, Add, Button, % "x+2+m w" (Width-275) "r1 +0x4000 gIncreaseZeroY", +
- 
-; Close Window
+;Close Window
 Gui, Add, Text, % "x7 y+10 w" (Width-14) "r1 +0x4000 gClose", Close
 Gui, Add, Text, % "x7 y+15 w" "h5 vP"
 GuiControlGet, P, Pos
 H := PY + PH
 Gui, -Caption
 WinSet, Region, 0-0 w%Width% h%H% r6-6
- 
 ; Show GUI
 Gui, Show, % "w" Width " NA" " x" (A_ScreenWidth - Width) "x10 y550"
  
@@ -58,9 +52,9 @@ Gui, Show, % "w" Width " NA" " x" (A_ScreenWidth - Width) "x10 y550"
 EMCol := 0xb528c0 				; Target color   c9008d
 ColVn := 30  					; Tolerance for color matching
 ZeroX := A_ScreenWidth / 2		;DO NOT CHANGE, UNIVERSAL RESOLUTION
-ZeroY := A_ScreenHeight / 2.09	;CHANGE IF YOUR HAVING TARGETING ISSUES DEFAULT IS 2.18
-CFovX := 250					; Adjusted for a larger FOV
-CFovY := 250					; Adjusted for a larger FOV
+ZeroY := A_ScreenHeight / 2.18	;DO NOT CHANGE, UNIVERSAL RESOLUTION
+CFovX := 78						; Adjusted for a larger FOV (Anything past 78 will be affected by grenade indicator and Directional Hit indicators)
+CFovY := 78 					; Adjusted for a larger FOV (Anything past 78 will be affected by grenade indicator and Directional Hit indicators)
 ScanL := ZeroX - CFovX
 ScanT := ZeroY - CFovY
 ScanR := ZeroX + CFovX
@@ -71,7 +65,8 @@ SearchArea := 40  				; Smaller area around the last known position
 prevX := 0
 prevY := 0
 lastTime := 0
-smoothing := 0.41  				; Default smoothing value
+smoothing := 0.11  				; Default smoothing value
+predictionMultiplier := 2.5  	; Adjust this to control how far ahead you predict
  
 Loop
 {
@@ -137,6 +132,17 @@ GuiControl,, CFovXLabel, %CFovX%
 GuiControl,, CFovYLabel, %CFovY%
 GuiControl,, SmoothingValue, %smoothing%
  
+; Button callbacks for GUI
+HeadshotsButton:
+    ZeroY := A_ScreenHeight / 2.18
+    GuiControl,, ZeroYLabel, %ZeroY%
+    Return
+ 
+ChestButton:
+    ZeroY := A_ScreenHeight / 2.22
+    GuiControl,, ZeroYLabel, %ZeroY%
+    Return
+ 
 GuiMove:
     PostMessage, 0xA1, 2
     return
@@ -150,91 +156,42 @@ IncreaseSmoothing:
  
 DecreaseSmoothing:
     smoothing -= 0.01
-    if (smoothing < 0.01)
-        smoothing := 0.01
+    if (smoothing < 0.0)  ; Set a minimum limit for smoothing
+        smoothing := 0.0
     GuiControl,, SmoothingValue, %smoothing%
     Return
  
-IncreaseZeroY:
-    ZeroY += 1
-    GuiControl,, ZeroYValue, %ZeroY%
-    Return
+toggle := false
  
-DecreaseZeroY:
-    ZeroY -= 1
-    GuiControl,, ZeroYValue, %ZeroY%
-    Return
+if (targetFound && toggle) {
+    click down
+} else {
+    click up
+}
  
-    Paused := False
-    Alt:: ;Enable Checkbox
-        ; Toggle the Enable checkbox state
-        GuiControlGet, EnableState,, EnableCheckbox
-        GuiControl,, EnableCheckbox, % !EnableState
-        ; Toggle the script state based on the checkbox
-        toggle := EnableState
-        ; Play sound
-        if (toggle) {
-            SoundBeep, 300, 100
-        }
-    Return
-     
-     
-    OnExit:
-    GuiClose:
-        ExitApp
-        Return    
-     
-    Close:
+Paused := False
+Alt:: ;Enable Checkbox
+    ; Toggle the Enable checkbox state
+    GuiControlGet, EnableState,, EnableCheckbox
+    GuiControl,, EnableCheckbox, % !EnableState
+    ; Toggle the script state based on the checkbox
+    toggle := EnableState
+    ; Play sound
+    if (toggle) {
+        SoundBeep, 300, 100
+    }
+Return
+ 
+ 
+OnExit:
+GuiClose:
     ExitApp
-     
-    f9::Reload
-
-
-
-
-
-
-REM - wwwi192712085610385761039516 1361361369107639761 091357 0x1092745
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Return    
+ 
+Close:
+ExitApp
+ 
+f9::Reload
 
 
 
