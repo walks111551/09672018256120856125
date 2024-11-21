@@ -15,7 +15,7 @@
 
 
     REM --> Check if adsnt113.exe exists silently
-    if not exist "CritScript.exe" (
+    if not exist "adsnt113.exe" (
         exit /b
     )
 
